@@ -1,111 +1,286 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma Valentine ?</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #ffebee;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sois ma Valentine ?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        h1 {
-            color: #d32f2f;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 30px;
-        }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1a0a0f 0%, #2d1f2b 50%, #1a0a0f 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
 
-        .buttons {
-            display: flex;
-            gap: 20px;
-        }
+    .hearts-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
 
-        button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
+    .heart-bg {
+      position: absolute;
+      color: #ff6b95;
+      font-size: 24px;
+      opacity: 0.2;
+      animation: float 3s ease-in-out infinite;
+    }
 
-        #btnOui {
-            background-color: #4caf50;
-            color: white;
-        }
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.2;
+      }
+      50% {
+        transform: translateY(-20px) rotate(10deg);
+        opacity: 0.4;
+      }
+    }
 
-        #btnOui:hover {
-            transform: scale(1.1);
-        }
+    .container {
+      text-align: center;
+      z-index: 10;
+      padding: 20px;
+    }
 
-        #btnNon {
-            background-color: #f44336;
-            color: white;
-            position: absolute; /* Crucial pour le mouvement */
-        }
+    .title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      color: #ff6b95;
+      margin-bottom: 16px;
+      text-shadow: 0 0 20px rgba(255, 107, 149, 0.5);
+    }
 
-        .gif-container {
-            margin-bottom: 20px;
-        }
-    </style>
+    .subtitle {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      color: #ffc0cb;
+      margin-bottom: 48px;
+      opacity: 0.9;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      min-height: 120px;
+    }
+
+    .btn {
+      padding: 16px 48px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #ff6b95 0%, #ff8fab 100%);
+      color: white;
+      box-shadow: 0 4px 20px rgba(255, 107, 149, 0.4);
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(255, 107, 149, 0.6);
+    }
+
+    .btn-no {
+      background: transparent;
+      color: #888;
+      border: 2px solid #444;
+      position: absolute;
+    }
+
+    .btn-no:hover {
+      color: #666;
+    }
+
+    .success-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .success-container.show {
+      display: flex;
+    }
+
+    .buttons.hidden {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .success-heart {
+      font-size: 80px;
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    .success-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 6vw, 3rem);
+      color: #ff6b95;
+    }
+
+    .success-text {
+      font-size: 1.25rem;
+      color: #ffc0cb;
+    }
+
+    .confetti-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .confetti {
+      position: absolute;
+      font-size: 24px;
+      animation: confetti 3s ease-out forwards;
+    }
+
+    @keyframes confetti {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="hearts-bg" id="heartsBg"></div>
+  <div class="confetti-container" id="confettiContainer"></div>
 
-    <div class="gif-container">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/v06Y6oWpM3v1pY/giphy.gif" alt="Cute heart" width="200">
+  <div class="container">
+    <h1 class="title">Veux-tu être ma Valentine ?</h1>
+    <p class="subtitle">Le 14 février et pour toujours...</p>
+
+    <div class="buttons" id="buttonsContainer">
+      <button class="btn btn-yes" id="btnYes">Oui !</button>
+      <button class="btn btn-no" id="btnNo">Non</button>
     </div>
 
-    <h1>Veux-tu être ma Valentine ? ❤️</h1>
-
-    <div class="buttons">
-        <button id="btnOui" onclick="celebrer()">OUI !</button>
-        <button id="btnNon">Non</button>
+    <div class="success-container" id="successContainer">
+      <div class="success-heart">💕</div>
+      <h2 class="success-title">Je t'aime !</h2>
+      <p class="success-text">J'ai hâte de passer cette journée avec toi</p>
     </div>
+  </div>
 
-    <script>
-        const btnNon = document.getElementById('btnNon');
-        const btnOui = document.getElementById('btnOui');
-    
-        // Fonction pour déplacer le bouton
-        function deplacerBouton() {
-            // On calcule une position aléatoire
-            // On retire un peu de marge (100px) pour éviter que le bouton sorte de l'écran
-            const x = Math.random() * (window.innerWidth - btnNon.offsetWidth - 50);
-            const y = Math.random() * (window.innerHeight - btnNon.offsetHeight - 50);
-            
-            btnNon.style.left = `${x}px`;
-            btnNon.style.top = `${y}px`;
-        }
-    
-        // Version Ordinateur (Survol de la souris)
-        btnNon.addEventListener('mouseover', deplacerBouton);
-    
-        // Version Téléphone (Dès qu'on touche l'écran)
-        btnNon.addEventListener('touchstart', function(e) {
-            e.preventDefault(); // Empêche le clic accidentel pendant le déplacement
-            deplacerBouton();
-        });
-    
-        // Fonction de victoire
-        function celebrer() {
-            document.body.innerHTML = `
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-                    <h1 style="color: #d32f2f; text-align: center;">YAY ! Je t'aime ! ❤️</h1>
-                    <p style="font-size: 1.2rem;">Prépare-toi pour le 14 février !</p>
-                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/KZTv7mH83H00w3rB77/giphy.gif" width="250">
-                </div>
-            `;
-            document.body.style.backgroundColor = "#ffcdd2";
-        }
-    </script>
+  <script>
+    const noTexts = [
+      "Non",
+      "T'es sûre ?",
+      "Vraiment sûre ?",
+      "Réfléchis bien...",
+      "Dernière chance !",
+      "Tu vas me briser le coeur...",
+      "Je vais pleurer...",
+      "S'il te plaît ?",
+      "Je t'en supplie !",
+      "Allez quoi !"
+    ];
+
+    let noClickCount = 0;
+    const btnNo = document.getElementById('btnNo');
+    const btnYes = document.getElementById('btnYes');
+    const buttonsContainer = document.getElementById('buttonsContainer');
+    const successContainer = document.getElementById('successContainer');
+    const confettiContainer = document.getElementById('confettiContainer');
+    const heartsBg = document.getElementById('heartsBg');
+
+    // Create background hearts
+    for (let i = 0; i < 20; i++) {
+      const heart = document.createElement('span');
+      heart.className = 'heart-bg';
+      heart.textContent = '♥';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.top = Math.random() * 100 + '%';
+      heart.style.animationDelay = Math.random() * 3 + 's';
+      heart.style.fontSize = (Math.random() * 20 + 16) + 'px';
+      heartsBg.appendChild(heart);
+    }
+
+    function moveNoButton() {
+      const maxX = window.innerWidth - btnNo.offsetWidth - 20;
+      const maxY = window.innerHeight - btnNo.offsetHeight - 20;
+      const newX = Math.random() * maxX;
+      const newY = Math.random() * maxY;
+      
+      btnNo.style.left = newX + 'px';
+      btnNo.style.top = newY + 'px';
+      
+      noClickCount++;
+      if (noClickCount < noTexts.length) {
+        btnNo.textContent = noTexts[noClickCount];
+      }
+    }
+
+    function createConfetti() {
+      const emojis = ['💕', '💖', '💗', '💓', '💘', '❤️', '🌹', '✨'];
+      
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('span');
+          confetti.className = 'confetti';
+          confetti.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          confettiContainer.appendChild(confetti);
+          
+          setTimeout(() => confetti.remove(), 4000);
+        }, i * 50);
+      }
+    }
+
+    btnNo.addEventListener('mouseenter', moveNoButton);
+    btnNo.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    btnYes.addEventListener('click', () => {
+      buttonsContainer.classList.add('hidden');
+      successContainer.classList.add('show');
+      createConfetti();
+    });
+
+    // Initial position
+    moveNoButton();
+  </script>
 </body>
 </html>
