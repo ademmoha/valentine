@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Valentine ?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffebee;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #d32f2f;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #btnOui {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        #btnOui:hover {
+            transform: scale(1.1);
+        }
+
+        #btnNon {
+            background-color: #f44336;
+            color: white;
+            position: absolute; /* Crucial pour le mouvement */
+        }
+
+        .gif-container {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gif-container">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/v06Y6oWpM3v1pY/giphy.gif" alt="Cute heart" width="200">
+    </div>
+
+    <h1>Veux-tu être ma Valentine ? ❤️</h1>
+
+    <div class="buttons">
+        <button id="btnOui" onclick="celebrer()">OUI !</button>
+        <button id="btnNon">Non</button>
+    </div>
+
+    <script>
+        const btnNon = document.getElementById('btnNon');
+        const btnOui = document.getElementById('btnOui');
+
+        // Fonction pour déplacer le bouton "Non" au survol
+        btnNon.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - btnNon.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btnNon.offsetHeight);
+            
+            btnNon.style.left = `${x}px`;
+            btnNon.style.top = `${y}px`;
+        });
+
+        // Fonction quand elle clique sur "Oui"
+        function celebrer() {
+            document.body.innerHTML = `
+                <h1 style="color: #d32f2f;">YAY ! Je t'aime ! ❤️</h1>
+                <p>Prépare-toi pour le 14 février !</p>
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHp6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/KZTv7mH83H00w3rB77/giphy.gif" width="300">
+            `;
+            document.body.style.backgroundColor = "#ffcdd2";
+        }
+    </script>
+</body>
+</html>
